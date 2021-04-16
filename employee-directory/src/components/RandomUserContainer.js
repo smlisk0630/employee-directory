@@ -44,12 +44,12 @@ class RandomUserContainer extends Component {
         <Row>
           <Col size="md-8">
             <Card
-              heading={this.state.result.Name || "Search for an Employee"}
+              heading={this.state.result || "Search for an Employee"}
             >
             { /* If a result is found, display details; otherwise, display No Results to Display */}
-              {this.state.result.Name ? (
+              {this.state.result ? (
                 <UserResultList
-                  Name={this.state.result.Name}
+                  name={this.state.result.Name}
                   location={this.state.result.Location}
                   email={this.state.result.Email}
                   phone={this.state.result.Phone}

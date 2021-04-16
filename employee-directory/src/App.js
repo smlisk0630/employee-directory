@@ -1,6 +1,5 @@
-import './App.css';
-import React from 'react';
-import RandomUserContainer from './components/RandomUserContainer';
+import React from "react";
+import RandomUserContainer from "./components/RandomUserContainer";
 
 function App() {
   return <RandomUserContainer />;
