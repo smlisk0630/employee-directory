@@ -5,12 +5,15 @@ import Col from "./Col";
 import Card from "./Card";
 import UserResultList from "./UserResultList";
 import UserSearchForm from "./UserSearchForm";
-import API from "../utils/API";
+// import API from "../utils/API";
+import axios from "axios";
+
+const BASEURL = "https://randomuser.me/api/";
 
 class RandomUserContainer extends Component {
   state = {
     search: "",
-    results: [],
+    results: {},
   };
 
   // When this component mounts, search the Random User API for Jim Nelson
@@ -18,10 +21,12 @@ class RandomUserContainer extends Component {
     this.searchAPI("Jim Nelson");
   }
 
-  searchAPI = (query) => {
-    API.search(query)
-      .then((res) => this.setState({ result: res.data }))
-      .catch((err) => console.log(err));
+  searchAPI = () => {
+    axios.get(BASEURL).then((results) => {
+      this.setState({
+        results: results.data.results[0]
+      })
+    });
   };
 
   handleInputChange = (event) => {
@@ -43,17 +48,15 @@ class RandomUserContainer extends Component {
       <Container>
         <Row>
           <Col size="md-8">
-            <Card
-              heading={this.state.result || "Search for an Employee"}
-            >
-            { /* If a result is found, display details; otherwise, display No Results to Display */}
-              {this.state.result ? (
+            <Card heading={this.state.results?.name?.last || "Search for an Employee"}>
+              {/* If a result is found, display details; otherwise, display No Results to Display */}
+              {this.state.results?.name?.last ? (
                 <UserResultList
-                  name={this.state.result.Name}
-                  location={this.state.result.Location}
-                  email={this.state.result.Email}
-                  phone={this.state.result.Phone}
-                  cell={this.state.result.Cell}
+                  name={this.state.results.name.first + " " + this.state.results.name.last}
+                  location={this.state.results.location.city}
+                  email={this.state.results.email}
+                  phone={this.state.results.phone}
+                  cell={this.state.results.cell}
                 />
               ) : (
                 <h3>No Results to Display</h3>
