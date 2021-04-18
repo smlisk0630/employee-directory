@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import Container from "./Container";
-import Row from "./Row";
-import Col from "./Col";
+// import Row from "./Row";
+//import Col from "./Col";
 import Card from "./Card";
 import UserResultList from "./UserResultList";
 import UserSearchForm from "./UserSearchForm";
 // import API from "../utils/API";
 import axios from "axios";
 
-const BASEURL = "https://randomuser.me/api/";
+const BASEURL = "https://randomuser.me/api/?result=25";
 
 class RandomUserContainer extends Component {
   state = {
@@ -24,8 +24,8 @@ class RandomUserContainer extends Component {
   searchAPI = () => {
     axios.get(BASEURL).then((results) => {
       this.setState({
-        results: results.data.results[0]
-      })
+        results: results.data.results[0],
+      });
     });
   };
 
@@ -46,33 +46,30 @@ class RandomUserContainer extends Component {
   render() {
     return (
       <Container>
-        <Row>
-          <Col size="md-8">
-            <Card heading={this.state.results?.name?.last || "Search for an Employee"}>
-              {/* If a result is found, display details; otherwise, display No Results to Display */}
-              {this.state.results?.name?.last ? (
-                <UserResultList
-                  name={this.state.results.name.first + " " + this.state.results.name.last}
-                  location={this.state.results.location.city}
-                  email={this.state.results.email}
-                  phone={this.state.results.phone}
-                  cell={this.state.results.cell}
-                />
-              ) : (
-                <h3>No Results to Display</h3>
-              )}
-            </Card>
-          </Col>
-          <Col size="md-4">
-            <Card heading="Search">
-              <UserSearchForm
-                value={this.state.search}
-                handleInputChange={this.handleInputChange}
-                handleFormSubmit={this.handleFormSubmit}
-              />
-            </Card>
-          </Col>
-        </Row>
+        <Card heading="Search">
+          <UserSearchForm
+            value={this.state.search}
+            handleInputChange={this.handleInputChange}
+            handleFormSubmit={this.handleFormSubmit}
+          />
+        </Card>
+        <Card heading="Results">
+          {this.state.results?.name?.last ? (
+            <UserResultList
+              name={
+                this.state.results.name.first +
+                " " +
+                this.state.results.name.last
+              }
+              location={this.state.results.location.city}
+              email={this.state.results.email}
+              phone={this.state.results.phone}
+              cell={this.state.results.cell}
+            />
+          ) : (
+            <h3>No Results to Display</h3>
+          )}
+        </Card>
       </Container>
     );
   }
