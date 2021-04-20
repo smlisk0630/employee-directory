@@ -8,7 +8,7 @@ import UserSearchForm from "./UserSearchForm";
 // import API from "../utils/API";
 import axios from "axios";
 
-const BASEURL = "https://randomuser.me/api/?result=25";
+const BASEURL = "https://randomuser.me/api/?results=25";
 
 class RandomUserContainer extends Component {
   state = {
@@ -24,17 +24,20 @@ class RandomUserContainer extends Component {
   searchAPI = () => {
     axios.get(BASEURL).then((results) => {
       this.setState({
-        results: results.data.results[0],
+        results: results.data.results,
       });
     });
   };
 
   handleInputChange = (event) => {
-    const value = event.target.value;
-    const name = event.target.name;
+    const value = event.target.value; // input box value
+    const name = event.target.name; 
     this.setState({
       [name]: value,
     });
+  };
+
+  handleSortChange = (event) => {
   };
 
   // When the form is submitted, search the Random User API for the value of `this.state.search`
@@ -50,21 +53,23 @@ class RandomUserContainer extends Component {
           <UserSearchForm
             value={this.state.search}
             handleInputChange={this.handleInputChange}
+            handleSortChange={this.handleSortChange}
             handleFormSubmit={this.handleFormSubmit}
           />
         </Card>
-        <Card heading="Results">
-          {this.state.results?.name?.last ? (
+        <Card heading="Results" className="text-center">
+          {this.state.results[0]?.name?.last ? (
             <UserResultList
-              name={
-                this.state.results.name.first +
-                " " +
-                this.state.results.name.last
-              }
-              location={this.state.results.location.city}
-              email={this.state.results.email}
-              phone={this.state.results.phone}
-              cell={this.state.results.cell}
+            users={this.state.results}
+              // name={
+              //   this.state.results.name.first +
+              //   " " +
+              //   this.state.results.name.last
+              // }
+              // location={this.state.results.location.city}
+              // email={this.state.results.email}
+              // phone={this.state.results.phone}
+              // cell={this.state.results.cell}
             />
           ) : (
             <h3>No Results to Display</h3>
