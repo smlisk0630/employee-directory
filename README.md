@@ -18,7 +18,7 @@ This application can be found at https://smlisk0630.github.io/employee-directory
 npm install employee-directory
 ```
 ## User Stories
-![Employee Directory Video](/public/assets/employee-directory.gif)
+![Employee Directory Screenshot](/public/assets/employee-directory.png)
 ## Usage
 Can be used to view, track, and log exercises and budgets.
 ## Dependencies
